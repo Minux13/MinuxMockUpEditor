@@ -1,0 +1,233 @@
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+    <title></title>
+    <style>
+
+#settings{
+    position: fixed;
+    background: #aaa;
+    width: 130px;
+    padding: 10px;
+    top: 0;
+    height: 100%;
+    z-index: 10;
+    text-align: center;
+    cursor: pointer;
+}
+.settingsShow{
+    right: 0;
+}
+.settingsHide{
+    right: 150%;
+}
+.buttonAddElement{
+    display: inline-block;
+    border-radius: 5px;
+    padding: 8px 13px;
+    border: 1px solid #fff;
+    color: #fff;
+    margin: 8px 0;
+}
+.settingsButton {
+    color: #94a;
+    border: 1px solid #94a;
+}
+
+.draggable{
+    width: 240px;
+    background-color: #fff;
+    color: #aaa;
+    position: absolute;
+    /*border: 1.5px solid #aaa;
+    touch-action: none;
+    user-select: none;
+    box-sizing: border-box;
+    -webkit-transform: translate(0px, 0px);
+            transform: translate(0px, 0px);
+    */
+    padding: 12px;
+    touch-action: none;
+    box-sizing: border-box;
+}
+.draggable:hover, .draggable:focus {
+  border: 1.5px solid #aaf;
+} 
+
+.imageLineStoked{
+    stroke-width: 1.5px;
+    stroke: #888;
+}
+
+    </style>
+    
+</head>
+<body>
+    
+    <div id="settings" class="settingsShow">  
+        <!--<div onclick="createText" class="buttonAddElement settingsButton">&#9881;</div>-->
+        <div onclick="new element;      " class="buttonAddElement">Texto          </div><br>
+        <div onclick="new img;          " class="buttonAddElement">Imagen         </div><br>
+        <div onclick="createInputText();" class="buttonAddElement">Input de Texto </div><br>
+    </div>
+    <div id="container">  
+    </div>
+
+</body>
+<script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
+<script src="https://unpkg.com/interactjs/dist/interact.min.js"></script>
+
+<script>
+
+const position = { x: 0, y: 0 }
+var idNum = 0;
+var z_Index = 10;
+
+function element(){
+    var myself = this;
+    idNum += 1;
+    
+    myself.node = document.createElement("div");
+    myself.node.innerHTML = 'Texto';
+    myself.node.setAttribute("class", "draggable");
+    myself.node.setAttribute("id", "element" + idNum );
+    myself.node.contentEditable = true;
+    myself.node.setAttribute("spellcheck", false );
+    //myself.position = { x: 0, y: 0 };
+    
+    document.getElementById("container").appendChild(myself.node);
+    
+    this.remove = function(){
+        this.node.remove();
+    }
+}
+
+function img(){
+    var myself = this;
+    idNum += 1;
+    
+    myself.node = document.createElement("div");;
+    myself.node.innerHTML =`<svg style="width:100%; height:100%;"> 
+                                <g>
+                                    <line x1="0%" y1="100%" x2="100%" y2="0%"    class="imageLineStoked" ></line> 
+                                    <line x1="0%" y1="0%" x2="100%" y2="100%"    class="imageLineStoked" ></line> 
+                                    <line x1="0%" y1="0%" x2="100%" y2="0%"      class="imageLineStoked" ></line> 
+                                    <line x1="0%" y1="0%" x2="0%" y2="100%"      class="imageLineStoked" ></line> 
+                                    <line x1="100%" y1="0%" x2="100%" y2="100%"  class="imageLineStoked" ></line> 
+                                    <line x1="0%" y1="100%" x2="100%" y2="100%"  class="imageLineStoked" ></line>
+                                    <g>
+                                        <rect width="90%" height="32" x="4" y="50%" transform="translate(0,-19)" fill="white" ></rect>
+                                        <text text-anchor="middle" x="50%" y="50%" style="font-size:16px;" fill="#666">Imagen</text>
+                                    </g>
+                                </g>
+                            </svg>`;
+    myself.node.setAttribute("class", "draggable");
+    myself.node.setAttribute("id", "element" + idNum );
+    myself.node.contentEditable = true;
+    myself.node.setAttribute("spellcheck", false );
+    myself.node.style.width = '100px';
+    myself.node.style.height= '100px';
+    //myself.position = { x: 0, y: 0 };
+    
+    document.getElementById("container").appendChild(myself.node);
+    
+    this.remove = function(){
+        this.node.remove();
+    }
+}
+
+
+
+var a = 0;
+
+/*
+interact('.draggable').draggable({
+  listeners: {
+    start (event) {
+      //console.log(event.type, event.target)
+    },
+    move (event) { //Event of mouse
+      a = event;
+      position.x += event.dx
+      position.y += event.dy
+      event.target.style.transform =
+        `translate(${position.x}px, ${position.y}px)`
+    },
+  }
+})*/
+
+
+interact('.draggable').draggable({
+    onmove: window.dragMoveListener,
+    onstart: dragEndMoveListener,
+})
+.resizable({
+    preserveAspectRatio: true,
+    edges: { left: false, right: true, bottom: true, top: false }
+})
+.on('resizemove', function (event) {
+    var target = event.target,
+    x = (parseFloat(target.getAttribute('data-x')) || 0),
+    y = (parseFloat(target.getAttribute('data-y')) || 0);
+
+    // update the element's style
+    target.style.width  = event.rect.width + 'px';
+    target.style.height = event.rect.height + 'px';
+    
+    // translate when resizing from top or left edges
+    x += event.deltaRect.left;
+    y += event.deltaRect.top;
+    
+    target.style.webkitTransform = target.style.transform =
+        'translate(' + x + 'px,' + y + 'px)';
+    
+    target.setAttribute('data-x', x);
+    target.setAttribute('data-y', y);
+    //target.textContent = event.rect.width + '×' + event.rect.height;
+});
+
+function dragMoveListener (event) {
+    var target = event.target,
+    // keep the dragged position in the data-x/data-y attributes
+    x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx,
+    y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
+
+    // translate the element
+    target.style.webkitTransform =
+    target.style.transform = 'translate(' + x + 'px, ' + y + 'px)';
+
+    // update the posiion attributes
+    target.setAttribute('data-x', x);
+    target.setAttribute('data-y', y);
+    
+}
+function dragEndMoveListener(event){
+    var target = event.target;
+    
+    z_Index += 1;
+    target.style.zIndex = z_Index;
+}
+
+
+
+document.onkeydown = function(e) {
+    if( e.which === 89 && e.ctrlKey ){
+        //alert('control + y'); 
+    }
+    else if( e.which === 83 && e.altKey ){
+        var settingsElement = document.getElementById('settings');
+        if( settingsElement.classList.contains('settingsShow') ){
+            settingsElement.classList.remove("settingsShow");
+            settingsElement.classList.add("settingsHide");
+        }else{
+            settingsElement.classList.remove("settingsHide");
+            settingsElement.classList.add("settingsShow");
+        }
+    }          
+}
+
+
+</script>
+
+</html>
