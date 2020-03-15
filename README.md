@@ -1,5 +1,15 @@
-Para ocultar y mostrar el panel de herramientas Alt-s
+# Minux MuckUp Editor
 
-Para copiar un elemento se tiene que hacer un drag y presionar Alt-c
+**An editor to create MockUps in the browser**
 
-Para eliminar un elemento se tiene que hacer un drag presionar Alt-r, se puede recuperar ese elemento presionando Alt-c sin dragear otra
+You can [catch me on minux.pw](http://minux.pw)
+
+## [Live Demo](http://minux.pw) | [Documentation](http://minux.pw)
+
+## Usage
+
+### Shortcuts
+
+* Hide and Show settings press Alt-s.
+* For copy and paste an item you must select (drag) it and press Alt-c.
+* For delete an item you must select (drag) it and press Alt-r, for undo this action press Alt-c immediately (don't drag another item).
