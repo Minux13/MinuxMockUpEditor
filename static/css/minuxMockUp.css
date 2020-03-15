@@ -1,0 +1,96 @@
+
+/* Menu bar right of settings */
+#settings{
+    position: fixed;
+    background: #aaa;
+    width: 130px;
+    padding: 10px;
+    top: 0;
+    height: 100%;
+    z-index: 10;
+    text-align: center;
+    cursor: pointer;
+    overflow-y: auto; 
+}
+.settingsShow{
+    right: 0;
+}
+.settingsHide{
+    right: 150%;
+}
+.buttonAddElement{
+    display: inline-block;
+    border-radius: 5px;
+    padding: 8px 13px;
+    border: 1px solid #fff;
+    color: #fff;
+    margin: 8px 0;
+}
+.settingsButton {
+    color: #94a;
+    border: 1px solid #94a;
+}
+#searchSetting{
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    width: 100%;
+    margin: 10px 0;
+    padding: 3px 6px;
+    color: #fff;
+    outline: transparent;
+}
+#searchSetting::placeholder {
+    color: #fff;
+    font-size: 15px;
+    font-family: sans-serif;
+}
+#searchSetting:focus {
+    border-bottom: 1px solid #fff;
+}
+
+
+/* General draggable elements */
+.minux_draggable{
+    width: 240px;
+    position: absolute;
+    /*border: 1.5px solid #aaa;
+    touch-action: none;
+    user-select: none;
+    box-sizing: border-box;
+    -webkit-transform: translate(0px, 0px);
+            transform: translate(0px, 0px);
+    */
+    touch-action: none;
+    box-sizing: border-box;
+}
+.minux_draggable:hover, .minux_draggable:focus {
+  border: 1.5px solid #aaf;
+} 
+
+
+
+/* Elements */
+.createdTxt{
+    background-color: #fff;
+    color: #aaa;
+    padding: 12px;
+}
+
+.createdInp{
+    background-color: #fff;
+    color: #888;
+    padding: 7px 12px;
+    border: 0.5px solid #777;
+}
+
+.createdImg{
+    background-color: #fff;
+    padding: 0;
+}
+.imageLineStoked{
+    stroke-width: 1.5px;
+    stroke: #888;
+}
+
+
