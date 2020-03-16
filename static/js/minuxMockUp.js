@@ -1,9 +1,9 @@
 
-function element(classElement){
+function element(classElement, txt){
     minuxMockUp.idNum += 1;
     
     var node = document.createElement("div");
-    node.innerHTML = 'Texto';
+    node.innerHTML = txt;
     node.setAttribute("class", "minux_draggable " +  classElement);
     node.setAttribute("id", "element" + minuxMockUp.idNum );
     node.contentEditable = true;
@@ -80,6 +80,18 @@ function inputForm(classElement, typeInput){
     document.getElementById("container").prepend(node);
 }
 
+function buscador(){
+    minuxMockUp.idNum += 1;
+    
+    var node = document.createElement("div");
+    node.innerHTML = 'Buscar <i class="fas fa-search"></i> ';
+    node.setAttribute("class", "minux_draggable buscador");
+    node.setAttribute("id", "element" + minuxMockUp.idNum );
+    node.contentEditable = true;
+    node.setAttribute("spellcheck", false );
+    
+    document.getElementById("container").prepend(node);
+}
 
 
 

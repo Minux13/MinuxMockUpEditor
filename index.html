@@ -17,6 +17,7 @@
     
     <form onsubmit="minuxMockUp.setFormatText(); return false;" id="formatItemText" style="border: solid 1px #ccc;padding: 10px; position: absolute;top: 0; right: 183px; display:none;">
         <input type="color" id="favcolor" name="favcolor" value="#0000ff"><br>
+        <input type="color" id="favbackground" name="favcolor" value="#0000ff"><br>
         <input type="number" id="favsize" name="favcolor" value="" style="width:45px;">px<br>
         <!--<select type="text" id="favcolor" name="favcolor" value="#ff0000"></select><br>-->
         <button type="button" id="boldFotmat"   style="font-weight: bold;">B</button>
@@ -30,9 +31,9 @@
         <!--<div id="iconCloseSettings"><i class="fas fa-times"></i></div> -->
         <!--<div onclick="createText" class="buttonAddElement settingsButton">&#9881;</div>-->
         <input type="text" id="searchSetting" onkeyup="searchSetting()" placeholder="Buscar..." >
-        <div onclick="element('createdTxt'); " class="buttonAddElement">Texto          </div><br>
+        <div onclick="element('createdTxt','Texto'); " class="buttonAddElement">Texto          </div><br>
         <div onclick="new img;          "          class="buttonAddElement">Imagen         </div><br>
-        <div onclick="element('createdInp'); " class="buttonAddElement">Input de Texto </div><br>
+        <div onclick="element('createdInp','Texto'); " class="buttonAddElement">Recuadro Texto </div><br>
         <div class="buttonAddElement dropdown">Campo Formulario 
             <div class="dropdown-content">
                 <a href="#" onclick="inputForm('','text');" >Tipo Texto</a>
@@ -43,6 +44,20 @@
                 <a href="#" onclick="inputForm('','upload');" > Archivo</a>
             </div>
         </div><br>
+        <div onclick="element('createdButton', 'Aceptar'); " class="buttonAddElement">Botón </div><br>
+        <div onclick="buscador(); " class="buttonAddElement">Buscador </div><br>
+        <div class="buttonAddElement dropdown"> Líneas
+            <div class="dropdown-content">
+                <a href="#"  onclick="element('createdLineHorizontal',''); " >Horizontal</a>
+                <a href="#"  onclick="element('createdLineVertical',''); " >Vertical</a>
+                <a href="#"  onclick="element('createdLineL1',''); " >L &#9484;</a>
+                <a href="#"  onclick="element('createdLineL2',''); " >L &#9488;</a>
+                <a href="#"  onclick="element('createdLineL3',''); " >L &#9496;</a>
+                <a href="#"  onclick="element('createdLineL4',''); " >L &#9492;</a>
+            </div>
+        </div><br>
+
+        <div onclick="element('createdCircle',''); " class="buttonAddElement">Círculo </div><br>
 
     </div>
     <div id="container">  
