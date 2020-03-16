@@ -14,12 +14,36 @@
 </head>
 <body>
     
-    <div id="settings" class="settingsShow">  
+    
+    <form onsubmit="minuxMockUp.setFormatText(); return false;" id="formatItemText" style="border: solid 1px #ccc;padding: 10px; position: absolute;top: 0; right: 183px; display:none;">
+        <input type="color" id="favcolor" name="favcolor" value="#0000ff"><br>
+        <input type="number" id="favsize" name="favcolor" value="" style="width:45px;">px<br>
+        <!--<select type="text" id="favcolor" name="favcolor" value="#ff0000"></select><br>-->
+        <button type="button" id="boldFotmat"   style="font-weight: bold;">B</button>
+        <button type="button" id="italicFotmat" style="font-style: italic;">I</button>
+        <button type="button" id="underlineFotmat" style="text-decoration: underline;">U</button>
+        <br>
+        <input type="submit" value="Aceptar">
+    </form>
+
+    <div id="settings" class="settingsShow">
+        <!--<div id="iconCloseSettings"><i class="fas fa-times"></i></div> -->
         <!--<div onclick="createText" class="buttonAddElement settingsButton">&#9881;</div>-->
         <input type="text" id="searchSetting" onkeyup="searchSetting()" placeholder="Buscar..." >
-        <div onclick="new element('createdTxt'); " class="buttonAddElement">Texto          </div><br>
+        <div onclick="element('createdTxt'); " class="buttonAddElement">Texto          </div><br>
         <div onclick="new img;          "          class="buttonAddElement">Imagen         </div><br>
-        <div onclick="new element('createdInp'); " class="buttonAddElement">Input de Texto </div><br>
+        <div onclick="element('createdInp'); " class="buttonAddElement">Input de Texto </div><br>
+        <div class="buttonAddElement dropdown">Campo Formulario 
+            <div class="dropdown-content">
+                <a href="#" onclick="inputForm('','text');" >Tipo Texto</a>
+                <a href="#" onclick="inputForm('','select');" > Tipo Select</a>
+                <a href="#" onclick="inputForm('','calendar');" > Calendario</a>
+                <a href="#" onclick="inputForm('','checkbox');" > Checkbox</a>
+                <a href="#" onclick="inputForm('','dateTime');" > Fecha/Hora</a>
+                <a href="#" onclick="inputForm('','upload');" > Archivo</a>
+            </div>
+        </div><br>
+
     </div>
     <div id="container">  
     </div>

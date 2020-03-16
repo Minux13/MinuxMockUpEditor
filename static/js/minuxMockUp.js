@@ -1,28 +1,20 @@
-var idNum = 0;
-var z_Index = 10;
-var elementTarget;
 
 function element(classElement){
-    var myself = this;
-    idNum += 1;
+    minuxMockUp.idNum += 1;
     
-    myself.node = document.createElement("div");
-    myself.node.innerHTML = 'Texto';
-    myself.node.setAttribute("class", "minux_draggable " +  classElement);
-    myself.node.setAttribute("id", "element" + idNum );
-    myself.node.contentEditable = true;
-    myself.node.setAttribute("spellcheck", false );
+    var node = document.createElement("div");
+    node.innerHTML = 'Texto';
+    node.setAttribute("class", "minux_draggable " +  classElement);
+    node.setAttribute("id", "element" + minuxMockUp.idNum );
+    node.contentEditable = true;
+    node.setAttribute("spellcheck", false );
     
-    document.getElementById("container").appendChild(myself.node);
-    
-    this.remove = function(){
-        this.node.remove();
-    }
+    document.getElementById("container").prepend(node);
 }
 
 function img(){
     var myself = this;
-    idNum += 1;
+    minuxMockUp.idNum += 1;
     
     myself.node = document.createElement("div");;
     myself.node.innerHTML =`<svg style="width:100%; height:100%;"> 
@@ -43,7 +35,7 @@ function img(){
                                 </g>
                             </svg>`;
     myself.node.setAttribute("class", "minux_draggable createdImg");
-    myself.node.setAttribute("id", "element" + idNum );
+    myself.node.setAttribute("id", "element" + minuxMockUp.idNum );
     myself.node.contentEditable = true;
     myself.node.setAttribute("spellcheck", false );
     myself.node.style.width = '100px';
@@ -53,9 +45,46 @@ function img(){
     
 }
 
+function inputForm(classElement, typeInput){
+    minuxMockUp.idNum += 1;
+
+    var inputsBox = {
+        text: '<div style="border: solid 1px #ccc; margin: 5px 0;width: 100%;color: #a8a8a8; font-style: italic;padding:5px 10px;box-sizing: border-box;">Texto...</div>',
+        calendar: '<div style="border: solid 1px #ccc; margin: 5px 0;width: 100%;color: #a8a8a8; font-style: italic;padding:5px 10px;box-sizing: border-box;"><div style="display: inline-block;"><i class="fas fa-calendar-alt" style="margin:0 7px 0 2px;"></i> Fecha...</div></div>',
+        select: '<div style="border: solid 1px #ccc; margin: 5px 0;width: 100%;color: #a8a8a8; font-style: italic;padding:5px 10px;box-sizing: border-box;"><div style="display: inline-block;">Selección...</div><div style="display: inline-block;float:right;"><i class="fas fa-angle-down"></i></div></div>',
+        checkbox: '<div><input type="checkbox"> <label>Campo</label><br><input type="checkbox"> <label>Campo</label> <br> <input type="checkbox"> <label>Campo</label> </div>',
+        dateTime: '<div style="border: solid 1px #ccc; margin: 5px 0;width: 100%;color: #a8a8a8; font-style: italic;padding:5px 10px;box-sizing: border-box;"><div style="display: inline-block;"><i class="fas fa-calendar-alt" style="margin:0 7px 0 2px;"></i> Fecha / Hora...</div></div>',
+        upload: '<div style="text-align: center; margin: 5px; background: linear-gradient(0deg, #eee, transparent); padding: 5px; width: 140px;"> <i class="fas fa-upload"></i> </div>',
+    }
+
+    var labelsInputs = {
+        text: 'Nombre *',
+        calendar: 'Fecha *',
+        select: 'Selecciona una Opción *',
+        checkbox: 'Selecciona una Opción *',
+        dateTime: 'Fecha y Hora * ',
+        upload: 'Selecciona un archivo * ',
+    }
+    
+    var node = document.createElement("div");
+    node.innerHTML = `
+        <span style="color: #555;">`+ labelsInputs[typeInput] +`</span>
+        `+ inputsBox[typeInput] +`
+        <div style="color:#8c1953;">[ Especificación 1 ]</div>
+    `;
+    node.setAttribute("class", "minux_draggable " );
+    node.setAttribute("id", "element" + minuxMockUp.idNum );
+    node.contentEditable = true;
+    node.setAttribute("spellcheck", false );
+    
+    document.getElementById("container").prepend(node);
+}
+
+
+
 
 interact('.minux_draggable').draggable({
-    onmove: window.dragMoveListener,
+    onmove: dragMoveListener,
     onstart: dragStartMoveListener,
     onend: dragEndMoveListener,
 })
@@ -82,6 +111,11 @@ interact('.minux_draggable').draggable({
     target.setAttribute('data-x', x);
     target.setAttribute('data-y', y);
     //target.textContent = event.rect.width + '×' + event.rect.height;
+})
+.on('click', function(event){
+    var target = event.target;
+    var targetDrag = target.closest(".minux_draggable");
+    minuxMockUp.elementTarget = targetDrag;
 });
 
 function dragMoveListener (event) {
@@ -101,11 +135,9 @@ function dragMoveListener (event) {
 }
 function dragStartMoveListener(event){
     var target = event.target;
-    
-    elementTarget = target;
 
-    z_Index += 1;
-    target.style.zIndex = z_Index;
+    minuxMockUp.z_Index += 1;
+    target.style.zIndex = minuxMockUp.z_Index;
 }
 function dragEndMoveListener(event){
     var target = event.target,
@@ -130,9 +162,9 @@ function dragEndMoveListener(event){
 
 document.onkeydown = function(e) {
     if( e.which === 67 && e.altKey ){
-        var clone = elementTarget.cloneNode(true);
-        idNum += 1;
-        clone.setAttribute("id", 'element' + idNum);
+        var clone = minuxMockUp.elementTarget.cloneNode(true);
+        minuxMockUp.idNum += 1;
+        clone.setAttribute("id", 'element' + minuxMockUp.idNum);
         clone.setAttribute("data-x", '');
         clone.setAttribute("data-y", '');
         clone.style.transform = '';
@@ -149,10 +181,35 @@ document.onkeydown = function(e) {
         }
     }          
     else if( e.which === 82 && e.altKey ){
-        elementTarget.remove();
+        minuxMockUp.removeItem();
     }
 }
 
+
+var minuxMockUp = {
+    elementTarget  : undefined,
+    ctr_C_Item     : undefined,
+    idNum          : 0,
+    z_Index        : 10,
+    setFormatText  : function(){
+        var color       = document.getElementById("favcolor").value;
+        var size        = document.getElementById("favcolor").value;
+        var fontFamily  = document.getElementById("favcolor").value;
+        var bold = document.getElementById("favcolor").value;
+        
+        minuxMockUp.elementTarget.style
+
+        console.log("24444444444");
+        return false;
+    },
+    setFormatItemText : function(color, size, fontFamily, ){
+            }, 
+    removeItem     : function(){
+        minuxMockUp.elementTarget.remove();
+    }
+
+
+}
 
 
 
