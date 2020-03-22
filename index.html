@@ -19,6 +19,7 @@
         <input type="color" id="favcolor" name="favcolor" value="#0000ff"><br>
         <input type="color" id="favbackground" name="favcolor" value="#0000ff"><br>
         <input type="number" id="favsize" name="favcolor" value="" style="width:45px;">px<br>
+        <input type="number" id="favalign" name="favcolor" value="" style="width:45px;"><br>
         <!--<select type="text" id="favcolor" name="favcolor" value="#ff0000"></select><br>-->
         <button type="button" id="boldFotmat"   style="font-weight: bold;">B</button>
         <button type="button" id="italicFotmat" style="font-style: italic;">I</button>
@@ -47,21 +48,27 @@
         <div onclick="element('createdButton', 'Aceptar'); " class="buttonAddElement">Botón </div><br>
         <div onclick="buscador(); " class="buttonAddElement">Buscador </div><br>
         <div class="buttonAddElement dropdown"> Líneas
-            <div class="dropdown-content">
+            <div class="dropdown-content" style="bottom:35px;">
                 <a href="#"  onclick="element('createdLineHorizontal',''); " >Horizontal</a>
                 <a href="#"  onclick="element('createdLineVertical',''); " >Vertical</a>
                 <a href="#"  onclick="element('createdLineL1',''); " >L &#9484;</a>
                 <a href="#"  onclick="element('createdLineL2',''); " >L &#9488;</a>
                 <a href="#"  onclick="element('createdLineL3',''); " >L &#9496;</a>
                 <a href="#"  onclick="element('createdLineL4',''); " >L &#9492;</a>
+                <a href="#"  onclick="lineSlash('deg45');" >L /</a>
+                <a href="#"  onclick="lineSlash('deg135'); " >L \</a>
             </div>
         </div><br>
 
         <div onclick="element('createdCircle',''); " class="buttonAddElement">Círculo </div><br>
+        <div onclick="element('createdRecRed',''); " class="buttonAddElement">Cuadrado Redondeado </div><br>
+        <div onclick="tabs(); "           class="buttonAddElement"> Pestañas </div><br>
 
     </div>
     <div id="container">  
     </div>
+
+
 
 </body>
 

@@ -7,7 +7,7 @@
     padding: 10px;
     top: 0;
     height: 100%;
-    z-index: 10;
+    z-index: 10000000000;
     text-align: center;
     cursor: pointer;
     overflow-y: auto; 
@@ -166,10 +166,46 @@
     background: #fff;
 }
 
+.createdRecRed{  /* Cuadrado redondeado */
+    border: 1px solid rgb(187, 187, 187);
+    border-radius: 9px;
+    width: 100px;
+    height: 100px;
+    background: #fff;
+}
 
 
+/*
+#tabsContainer{position: absolute; width: 600px; height: 500px; border: 1px solid #ccc;}
+.tabs{
+    height: 32px;
+    border-top-right-radius: 22px;
+    border-top-left-radius: 22px;
+    border-top: 1px solid #555;
+    border-right: 1px solid #555;
+    border-bottom: 1px solid #777;
+    position: absolute;
+}
+#tab1{width: 33.33%;}
+#tab2{width: 66.66%;}
+#tab3{width: 100%;}
+*/
 
-
+#tabsContainer, .tabsContainer{display: flex; width: 600px; height: 500px; border: 1px solid #aaa;border-top:none;}
+.tabs{
+    height: 32px;
+    border-right: 1px solid  #aaa;
+    border-top: 1px solid    #aaa;
+    border-left: 1px solid   #aaa;
+    border-bottom: 1px solid #aaa;
+    width: 33.33%;
+    background: #f0f0f0;
+    border-top-right-radius: 3px;
+    border-top-left-radius:  3px;
+    margin: -1px;
+}
+.tabs[active] {border-bottom: none; background:white; border-top-right-radius: 4px; border-top-left-radius: 4px;z-index:10000000;}
+.contentTabs{ width:100% }
 
 
 /* Dropdown Button */

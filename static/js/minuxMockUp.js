@@ -93,6 +93,44 @@ function buscador(){
     document.getElementById("container").prepend(node);
 }
 
+function lineSlash(deg){
+    var myself = this;
+    minuxMockUp.idNum += 1;
+    
+    var slash = {
+        deg45 : '<line x1="0%" y1="100%" x2="100%" y2="0%" style="stroke:#bbb;stroke-width:1px;" ></line>',
+        deg135: '<line x1="0%" y1="0%" x2="100%" y2="100%" style="stroke:#bbb;stroke-width:1px;" ></line>',
+    }
+
+    myself.node = document.createElement("div");;
+    myself.node.innerHTML =`<svg style="width:100%; height:100%;"> 
+                                `+ slash[deg] +` 
+                            </svg>`;
+    myself.node.setAttribute("class", "minux_draggable");
+    myself.node.setAttribute("id", "element" + minuxMockUp.idNum );
+    myself.node.style.width = '100px';
+    myself.node.style.height= '100px';
+    
+    document.getElementById("container").appendChild(myself.node);
+    
+}
+
+function tabs(){
+    
+    minuxMockUp.idNum += 1;
+    
+    node = document.createElement("div");;
+    node.innerHTML =`<div id="tab1" class="tabs" active> Texto 1</div>
+        <div class="tabs">Texto 2</div>
+        <div class="tabs">Texto 3</div><br>
+    `;
+    node.setAttribute("class", "minux_draggable tabsContainer");
+    node.setAttribute("id", "element" + minuxMockUp.idNum );
+    node.contentEditable = true;
+    node.setAttribute("spellcheck", false );
+    
+    document.getElementById("container").appendChild(node);
+}
 
 
 interact('.minux_draggable').draggable({
