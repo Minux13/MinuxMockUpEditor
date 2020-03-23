@@ -251,3 +251,13 @@
 
 /* Change the background color of the dropdown button when the dropdown content is shown */
 .dropdown:hover .dropbtn {background-color: #3e8e41;}
+
+
+
+.minux_draggable_only{
+    position: absolute;
+}
+.minux_draggable_not{
+    position: absolute;
+    box-shadow: 0 0 7px #88f;
+}

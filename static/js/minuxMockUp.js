@@ -70,7 +70,7 @@ function inputForm(classElement, typeInput){
     node.innerHTML = `
         <span style="color: #555;">`+ labelsInputs[typeInput] +`</span>
         `+ inputsBox[typeInput] +`
-        <div style="color:#8c1953;">[ Especificación 1 ]</div>
+        <div style="color:#215ccc;">[ Especificación 1 ]</div>
     `;
     node.setAttribute("class", "minux_draggable " );
     node.setAttribute("id", "element" + minuxMockUp.idNum );
@@ -163,10 +163,47 @@ interact('.minux_draggable').draggable({
     //target.textContent = event.rect.width + '×' + event.rect.height;
 })
 .on('click', function(event){
+    /*Store the draggable element*/
     var target = event.target;
     var targetDrag = target.closest(".minux_draggable");
     minuxMockUp.elementTarget = targetDrag;
+
+    if(minuxMockUp.isPressCtrlKey){
+        minuxMockUp.storeDivs.push( targetDrag );
+    }
 });
+
+interact('.minux_draggable_only').draggable({
+    onmove: function dragMoveListener (event) {
+        var target = event.target;
+
+        if (minuxMockUp.storeSelectedDiv){
+            var childrenDraggable = minuxMockUp.storeSelectedDiv.childNodes;
+            if( childrenDraggable ){
+                for( var child = 0; child < childrenDraggable.length; child++ ){
+                    var childDrag = childrenDraggable[child];
+                    if( childDrag.classList.contains("minux_draggable_not") ){
+                        
+                        x = (parseFloat(childDrag.getAttribute('data-x')) || 0) + event.dx,
+                        y = (parseFloat(childDrag.getAttribute('data-y')) || 0) + event.dy;
+
+                        // translate the element
+                        childDrag.style.webkitTransform =
+                        childDrag.style.transform = 'translate(' + x + 'px, ' + y + 'px)';
+
+                        // update the posiion attributes
+                        childDrag.setAttribute('data-x', x);
+                        childDrag.setAttribute('data-y', y);
+
+                    }
+                }
+            }
+        }
+    },
+    onstart: dragStartMoveListener,
+    onend: dragEndMoveListener,
+})
+
 
 function dragMoveListener (event) {
     var target = event.target,
@@ -181,6 +218,38 @@ function dragMoveListener (event) {
     // update the posiion attributes
     target.setAttribute('data-x', x);
     target.setAttribute('data-y', y);
+
+    
+    /*
+    if (minuxMockUp.storeSelectedDiv){
+        var childrenDraggable = minuxMockUp.storeSelectedDiv.childNodes;
+        if( childrenDraggable ){
+            for( var child = 0; child < childrenDraggable.length; child++ ){
+                if( childrenDraggable[child].classList.contains("minux_draggable_not") ){
+                    var thisDataX = parseFloat(childrenDraggable[child].getAttribute('data-x'));
+                    var thisDataY = parseFloat(childrenDraggable[child].getAttribute('data-x'));
+
+                    var newX = event.dx + x;
+                    var newY = event.dy + y;
+        console.log(newX);
+                    childrenDraggable[child].setAttribute('data-x', newX );
+                    childrenDraggable[child].setAttribute('data-y', newY);
+                }
+            }
+        }
+    }
+
+    /*
+    var hasChildrenDraggable = minuxMockUp.storeSelectedDiv.childNodes.length;
+    var childrenDraggable = minuxMockUp.storeSelectedDiv.childNodes;
+    if( hasChildrenDraggable ){
+        for( var child in childrenDraggable ){
+            if( childrenDraggable[child].classList.contains("minux_draggable_not") ){
+                childrenDraggable[child].classList.remove("minux_draggable_not");
+                childrenDraggable[child].classList.add("minux_draggable");
+            }
+        }
+    }*/
     
 }
 function dragStartMoveListener(event){
@@ -233,14 +302,31 @@ document.onkeydown = function(e) {
     else if( e.which === 82 && e.altKey ){
         minuxMockUp.removeItem();
     }
+    else if( e.which === 81 && e.altKey ){
+        minuxMockUp.desSelected();
+    }
+    else if( e.which === 17 ){
+        minuxMockUp.isPressCtrlKey = true;
+    }
+}
+document.onkeyup = function(e) {
+    if( e.which === 17 ){
+        minuxMockUp.isPressCtrlKey = false;
+        minuxMockUp.storeSelecteds();
+    }
 }
 
 
+
+
 var minuxMockUp = {
-    elementTarget  : undefined,
-    ctr_C_Item     : undefined,
-    idNum          : 0,
-    z_Index        : 10,
+    elementTarget    : undefined,
+    ctr_C_Item       : undefined,
+    idNum            : 0,
+    z_Index          : 10,
+    isPressCtrlKey   : false,
+    storeDivs        : [],
+    storeSelectedDiv : undefined, 
     setFormatText  : function(){
         var color       = document.getElementById("favcolor").value;
         var size        = document.getElementById("favcolor").value;
@@ -256,9 +342,35 @@ var minuxMockUp = {
             }, 
     removeItem     : function(){
         minuxMockUp.elementTarget.remove();
-    }
+    },
+    storeSelecteds: function(){
+        
+        //if( minuxMockUp.storeSelectedDiv ){return;}
+        minuxMockUp.storeSelectedDiv = document.createElement('div');
+        minuxMockUp.storeSelectedDiv.setAttribute('class', 'minux_draggable_only');
+        minuxMockUp.storeSelectedDiv.style.position = "absolute";
+        for(var e=0; e<minuxMockUp.storeDivs.length; e++){
+            minuxMockUp.storeSelectedDiv.appendChild(minuxMockUp.storeDivs[e]);
+            minuxMockUp.storeDivs[e].classList.remove('minux_draggable');
+            minuxMockUp.storeDivs[e].classList.add('minux_draggable_not');
+        }
+        
+        var c = document.getElementById('container');
+        c.appendChild( minuxMockUp.storeSelectedDiv );
 
-
+    },
+    desSelected: function(){
+        var container = document.getElementById('container');
+        var children = minuxMockUp.storeSelectedDiv.children;
+        var numChildren = children.length;
+        for(var c = numChildren-1; c>=0; c--){
+            children[c].classList.remove('minux_draggable_not');
+            children[c].classList.add('minux_draggable');
+            container.appendChild( children[c] );
+            minuxMockUp.storeDivs= [];
+        }
+        minuxMockUp.storeSelectedDiv.remove();
+    },
 }
 
 
