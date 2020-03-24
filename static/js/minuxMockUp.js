@@ -400,3 +400,27 @@ function searchSetting() {
 }
 
 
+
+function as(){
+    parentt = window.getSelection().getRangeAt(0).startContainer.parentNode.closest('.containerInfoTabs');
+    textInnerHTML = parentt.innerHTML;  //window.getSelection().getRangeAt(0).startContainer
+    text = window.getSelection().anchorNode.textContent;
+    start= window.getSelection().anchorOffset;
+    end = window.getSelection().focusOffset;
+    len = text.length;
+    
+    textNoSelected1 = text.slice(0, start);
+    console.log(textNoSelected1);
+    textNoSelected2 = text.slice(end, len);
+    textSelected = text.slice(start, end);
+    newText = textNoSelected1 + '<span style="color:red; font-family:30px;">' +textSelected + '</span>' + textNoSelected2
+    
+    console.log(text);
+    console.log(start);
+    console.log(end);
+    console.log(len);
+    
+    //Presenta problemas cuando un elemento html es identico a otro, se editara el primero
+    parentt.innerHTML = textInnerHTML.replace(text, newText) ;
+    //Tambien presenta problemas con los caracteres utf8
+}
