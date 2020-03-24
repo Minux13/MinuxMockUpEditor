@@ -122,10 +122,10 @@ function tabs(numTabs){
     node = document.createElement("div");;
     var innerText =`
         <div class="tabsContainer" >
-            <div id="tab1" class="tabs" active> Texto 1</div>`;
+            <div id="tab1" class="tabs" active onclick="minuxMockUp.elements.tabs.active(this);"> Texto 1</div>`;
 
     for(var n = 2; n <= numTabs; n++){
-        innerText += '<div class="tabs">Texto '+ n +'</div>';
+        innerText += '<div class="tabs" onclick="minuxMockUp.elements.tabs.active(this);">Texto '+ n +'</div>';
     }
 
     innerText += `</div>
@@ -347,10 +347,24 @@ var minuxMockUp = {
         console.log("24444444444");
         return false;
     },
+    elements: {
+        tabs:{
+            active: function(thiss){
+                    aa = thiss;
+                var parentt = thiss.closest(".tabsContainer");
+                var childrenTabs = parentt.getElementsByClassName('tabs');
+                for(var c=childrenTabs.length -1; c>=0; c--){
+                    childrenTabs[c].removeAttribute('active');
+                }
+                thiss.setAttribute('active', '');
+            }
+        }
+    },
     setFormatItemText : function(color, size, fontFamily, ){
             }, 
     removeItem     : function(){
         minuxMockUp.elementTarget.remove();
+        minuxMockUp.elementTarget = null;
     },
     storeSelecteds: function(){
         
@@ -400,7 +414,7 @@ function searchSetting() {
 }
 
 
-
+/*
 function as(){
     parentt = window.getSelection().getRangeAt(0).startContainer.parentNode.closest('.containerInfoTabs');
     textInnerHTML = parentt.innerHTML;  //window.getSelection().getRangeAt(0).startContainer
@@ -423,4 +437,4 @@ function as(){
     //Presenta problemas cuando un elemento html es identico a otro, se editara el primero
     parentt.innerHTML = textInnerHTML.replace(text, newText) ;
     //Tambien presenta problemas con los caracteres utf8
-}
+}*/
