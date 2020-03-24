@@ -115,16 +115,25 @@ function lineSlash(deg){
     
 }
 
-function tabs(){
+function tabs(numTabs){
     
     minuxMockUp.idNum += 1;
     
     node = document.createElement("div");;
-    node.innerHTML =`<div id="tab1" class="tabs" active> Texto 1</div>
-        <div class="tabs">Texto 2</div>
-        <div class="tabs">Texto 3</div><br>
+    var innerText =`
+        <div class="tabsContainer" >
+            <div id="tab1" class="tabs" active> Texto 1</div>`;
+
+    for(var n = 2; n <= numTabs; n++){
+        innerText += '<div class="tabs">Texto '+ n +'</div>';
+    }
+
+    innerText += `</div>
+        <div class="containerInfoTabs"> 
+        </div>
     `;
-    node.setAttribute("class", "minux_draggable tabsContainer");
+    node.innerHTML = innerText;
+    node.setAttribute("class", "minux_draggable draggable_tabs");
     node.setAttribute("id", "element" + minuxMockUp.idNum );
     node.contentEditable = true;
     node.setAttribute("spellcheck", false );
